@@ -90,7 +90,7 @@ cfg_tuple Configure(Reducer* _rdcr, std::string& _channel){
   std::list<std::string> daughters;
   std::list<std::string> stable_particles;
   bool isMC = false;
-  bool isFlat = false;
+  bool isFlat = true;
   if (_channel == "Bd2JpsiKS"){
     head = "B0";
     daughters.push_back("J_psi_1S");
