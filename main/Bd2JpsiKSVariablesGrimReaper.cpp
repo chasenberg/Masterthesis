@@ -90,7 +90,7 @@ cfg_tuple Configure(Reducer* _rdcr, std::string& _channel){
   std::list<std::string> daughters;
   std::list<std::string> stable_particles;
   bool isMC = false;
-  bool isFlat = true;
+  bool isFlat = false;
   if (_channel == "Bd2JpsiKS"){
     head = "B0";
     daughters.push_back("J_psi_1S");
@@ -139,22 +139,38 @@ void VetoLeaves(Reducer* _rdcr, cfg_tuple& cfg){
 
 
   std::string mass_hypo_constraints = "";
-  if (_rdcr->LeafExists(std::get<0>(cfg)+"_FitDaughtersConst_KS0_P0_PX")){
-    pplus_px  = std::get<0>(cfg)+"_FitDaughtersConst_KS0_P0_PX"+flat_suffix;
-    pplus_py  = std::get<0>(cfg)+"_FitDaughtersConst_KS0_P0_PY"+flat_suffix;
-    pplus_pz  = std::get<0>(cfg)+"_FitDaughtersConst_KS0_P0_PZ"+flat_suffix;
-    piminus_px = std::get<0>(cfg)+"_FitDaughtersConst_KS0_P1_PX"+flat_suffix;
-    piminus_py = std::get<0>(cfg)+"_FitDaughtersConst_KS0_P1_PY"+flat_suffix;
-    piminus_pz = std::get<0>(cfg)+"_FitDaughtersConst_KS0_P1_PZ"+flat_suffix;
-    piplus_px  = std::get<0>(cfg)+"_FitDaughtersConst_KS0_P0_PX"+flat_suffix;
-    piplus_py  = std::get<0>(cfg)+"_FitDaughtersConst_KS0_P0_PY"+flat_suffix;
-    piplus_pz  = std::get<0>(cfg)+"_FitDaughtersConst_KS0_P0_PZ"+flat_suffix;
-    pminus_px = std::get<0>(cfg)+"_FitDaughtersConst_KS0_P1_PX"+flat_suffix;
-    pminus_py = std::get<0>(cfg)+"_FitDaughtersConst_KS0_P1_PY"+flat_suffix;
-    pminus_pz = std::get<0>(cfg)+"_FitDaughtersConst_KS0_P1_PZ"+flat_suffix;
-    mass_hypo_constraints = "JpsiPV";
-  }
-  else if (_rdcr->LeafExists("pplus_PX")){
+  //if (_rdcr->LeafExists(std::get<0>(cfg)+"_FitDaughtersConst_KS0_P0_PX")){
+    //pplus_px  = std::get<0>(cfg)+"_FitDaughtersConst_KS0_P0_PX"+flat_suffix;
+    //pplus_py  = std::get<0>(cfg)+"_FitDaughtersConst_KS0_P0_PY"+flat_suffix;
+    //pplus_pz  = std::get<0>(cfg)+"_FitDaughtersConst_KS0_P0_PZ"+flat_suffix;
+    //piminus_px = std::get<0>(cfg)+"_FitDaughtersConst_KS0_P1_PX"+flat_suffix;
+    //piminus_py = std::get<0>(cfg)+"_FitDaughtersConst_KS0_P1_PY"+flat_suffix;
+    //piminus_pz = std::get<0>(cfg)+"_FitDaughtersConst_KS0_P1_PZ"+flat_suffix;
+    //piplus_px  = std::get<0>(cfg)+"_FitDaughtersConst_KS0_P0_PX"+flat_suffix;
+    //piplus_py  = std::get<0>(cfg)+"_FitDaughtersConst_KS0_P0_PY"+flat_suffix;
+    //piplus_pz  = std::get<0>(cfg)+"_FitDaughtersConst_KS0_P0_PZ"+flat_suffix;
+    //pminus_px = std::get<0>(cfg)+"_FitDaughtersConst_KS0_P1_PX"+flat_suffix;
+    //pminus_py = std::get<0>(cfg)+"_FitDaughtersConst_KS0_P1_PY"+flat_suffix;
+    //pminus_pz = std::get<0>(cfg)+"_FitDaughtersConst_KS0_P1_PZ"+flat_suffix;
+    //mass_hypo_constraints = "JpsiPV";
+    //
+ // if (_rdcr->LeafExists("pplus_PX")){
+     pplus_px  = "piplus_PX";
+     pplus_py  = "piplus_PY";
+     pplus_pz  = "piplus_PZ";
+     piminus_px = "piminus_PX";
+     piminus_py = "piminus_PY";
+     piminus_pz = "piminus_PZ";
+     piplus_px  = "piplus_PX";
+     piplus_py  = "piplus_PY";
+     piplus_pz  = "piplus_PZ";
+     pminus_px = "piminus_PX";
+     pminus_py = "piminus_PY";
+     pminus_pz = "piminus_PZ";
+     mass_hypo_constraints = "NoConstr";
+
+ // }
+  /*else if (_rdcr->LeafExists("pplus_PX")){
     pplus_px  = "pplus_PX";
     pplus_py  = "pplus_PY";
     pplus_pz  = "pplus_PZ";
@@ -168,7 +184,7 @@ void VetoLeaves(Reducer* _rdcr, cfg_tuple& cfg){
     pminus_py = "piminus_PY";
     pminus_pz = "piminus_PZ";
     mass_hypo_constraints = "NoConstr";
-  }
+  }*/
 
 if (mass_hypo_constraints!=""){
     // mass hypotheses// mass hypotheses
