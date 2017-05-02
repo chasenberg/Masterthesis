@@ -315,3 +315,38 @@ classify_unseen_data([classifier], bkg_dataframe, bdt_features, 'BDTresponse')
 ##################################################################################################
 ###############################Write BDT output to ROOT-file######################################
 ##################################################################################################
+
+#BDT output to arrays
+bdt_output = real_dataframe['BDTresponse']
+
+from ROOT import TTreeFormula
+# writing interim file and tree to have same number of events in ttree and dataset (restricted mass range)
+
+print('Creatin output file')
+interim_file = TFile("/tmp/interim.root","recreate")
+interim_tree = tree_data
+cut_string = ""
+formula = TTreeFormula("formula",cut_string,interim_tree)
+interim_tree = tree_data.CopyTree(cut_string)
+interim_tree.Write()
+data.Close()
+
+# now writing final File
+new_file = TFile("/fhgfs/users/chasenberg/data_trigger_incomplete/2015/jpsiks/Bd2JpsiKS_data_2015_bdtoutput.root","recreate")
+new_tree = interim_tree.CloneTree()
+interim_file.Close()
+
+interim_entries = new_tree.GetEntries()
+
+bdt_response = np.zeros(1, dtype=float)
+bdt_output_branch = new_tree.Branch('bdt_output',bdt_output,'bdt_output')
+
+for i in range(0,interim_entries):
+  bdt_response[0] = bdt_output[i]
+  bdt_output_branch.Fill()
+
+new_tree.Write()
+new_file.Close()
+
+# removing interim file
+os.remove("/tmp/interim.root")

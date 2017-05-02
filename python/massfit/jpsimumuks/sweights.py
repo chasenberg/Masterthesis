@@ -29,14 +29,12 @@ from lhcb_style import set_lhcb_style # Set basic LHCb plot style
 set_lhcb_style()
 from root_utils import plot_pulls
 
-#directories and files
-data_dir = '/fhgfs/users/chasenberg/data/2015/jpsiks/flattened/'
-data_file ='Bd2JpsiKS_data_2015_flattened.root'
-data_dir = os.path.join(data_dir, data_file)
+dataset_file_name = '/fhgfs/users/chasenberg/data/2015/jpsimumuks/Bd2JpsimumuKS_data_2015_flat_oldCut_red_sel.root'
+data = ROOT.TFile(dataset_file_name)
+tree_data = data.Get('Bd2JpsiKs')
 
-tree_name = 'test'
-data = ROOT.TFile('/fhgfs/users/chasenberg/data_trigger_incomplete/2015/jpsiks/test.root',"READ")
-tree_data = data.Get(tree_name)
+ntupleVarSet =  RooArgSet(mass)
+dataset = RooDataSet('data','data',tree_data,ntupleVarSet)
 
 print("The tuple has",tree_data.GetEntries(),"entries.")
 
@@ -94,7 +92,7 @@ interim_tree.Write()
 data.Close()
 
 # now writing final File
-new_file = TFile("/fhgfs/users/chasenberg/data/2015/jpsiks/sweights/Bd2JpsiKS_data_2015_flattened_sw.root","recreate")
+new_file = TFile("/fhgfs/users/chasenberg/jpsimumuks/Bd2JpsimumuKS_data_2015_flat_oldCut_red_sel_sw.root","recreate")
 new_tree = interim_tree.CloneTree()
 interim_file.Close()
 
