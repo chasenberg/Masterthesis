@@ -1,0 +1,1 @@
+source /doosoft/bin/LoadDooSoftware 
